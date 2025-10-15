@@ -155,7 +155,7 @@ export default async function JobDetailPage({ params }: Props) {
                 Fotos ({job.photos.length})
               </h3>
               <div className="grid grid-cols-3 gap-2">
-                {job.photos.map((photo, index) => (
+                {job.photos.map((photo: string, index: number) => (
                   <img
                     key={index}
                     src={photo}
