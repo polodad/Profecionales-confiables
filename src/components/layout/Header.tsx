@@ -25,6 +25,9 @@ export async function Header() {
             <Link href="/servicios" className="text-primary-600 hover:text-orange-500 transition-colors">
               Servicios
             </Link>
+            <Link href="/ciudades" className="text-primary-600 hover:text-orange-500 transition-colors">
+              Ciudades
+            </Link>
             <Link href="/como-funciona" className="text-primary-600 hover:text-orange-500 transition-colors">
               Cómo Funciona
             </Link>

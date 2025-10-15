@@ -124,8 +124,10 @@ export default async function HomePage() {
           <h2 className="text-3xl font-bold text-center mb-12 text-primary-600">
             Ciudades Disponibles
           </h2>
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {cities?.map((city) => (
+          
+          {/* Mostrar solo las primeras 6 ciudades inicialmente */}
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
+            {cities?.slice(0, 6).map((city) => (
               <Link
                 key={city.id}
                 href={`/${city.slug}`}
@@ -137,6 +139,32 @@ export default async function HomePage() {
                 </p>
               </Link>
             ))}
+          </div>
+
+          {/* Botón para mostrar todas las ciudades */}
+          {cities && cities.length > 6 && (
+            <div className="text-center">
+              <Link href="/ciudades">
+                <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold inline-flex items-center gap-2 transition-colors shadow-md hover:shadow-lg">
+                  Ver todas las ciudades ({cities.length} ciudades disponibles)
+                  <svg 
+                    className="w-5 h-5" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </Link>
+            </div>
+          )}
+
+          {/* Mostrar contador de ciudades */}
+          <div className="text-center mt-8">
+            <p className="text-primary-600 text-lg">
+              <strong>{cities?.length || 0} ciudades</strong> disponibles en toda la República Mexicana
+            </p>
           </div>
         </div>
       </section>

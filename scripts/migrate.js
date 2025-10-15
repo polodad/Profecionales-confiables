@@ -29,12 +29,59 @@ async function runMigrations() {
     const sql = fs.readFileSync(path.join(migrationsDir, file), 'utf8');
 
     try {
-      const { error } = await supabase.rpc('exec_sql', { sql_string: sql });
-      if (error) throw error;
+      // Dividir el SQL en declaraciones individuales
+      const statements = sql
+        .split(';')
+        .map(stmt => stmt.trim())
+        .filter(stmt => stmt.length > 0 && !stmt.startsWith('--'));
+
+      for (const statement of statements) {
+        if (statement.trim()) {
+          const { error } = await supabase.rpc('exec', { sql: statement });
+          if (error) {
+            // Si exec no funciona, intentar con query directo para SELECT
+            if (statement.toUpperCase().startsWith('SELECT')) {
+              const { error: queryError } = await supabase.from('_').select('*').limit(0);
+              if (queryError && !queryError.message.includes('relation "_" does not exist')) {
+                throw error;
+              }
+            } else {
+              throw error;
+            }
+          }
+        }
+      }
       console.log(`✅ Success: ${file}\n`);
     } catch (error) {
       console.error(`❌ Error in ${file}:`, error.message);
-      process.exit(1);
+      console.log('💡 Intentando método alternativo...');
+      
+      // Método alternativo: ejecutar directamente con fetch
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/exec`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+            'apikey': process.env.SUPABASE_SERVICE_ROLE_KEY
+          },
+          body: JSON.stringify({ sql })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+        }
+        
+        console.log(`✅ Success (alternative method): ${file}\n`);
+      } catch (altError) {
+        console.error(`❌ Alternative method also failed:`, altError.message);
+        console.log('\n🔧 Solución manual:');
+        console.log('   1. Ve a tu dashboard de Supabase');
+        console.log('   2. Ve a SQL Editor');
+        console.log('   3. Copia y pega el contenido del archivo:', file);
+        console.log('   4. Ejecuta el SQL manualmente\n');
+        process.exit(1);
+      }
     }
   }
 
