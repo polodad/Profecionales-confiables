@@ -25,14 +25,14 @@ export default async function HomePage() {
       <Header />
 
       {/* Hero Section con Buscador */}
-      <section className="relative text-white py-20 overflow-hidden">
+      <section className="relative text-white py-20 overflow-hidden bg-gradient-to-br from-primary-600 to-primary-800">
         <ToolsBackground />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Profesionales Confiables para tu Proyecto
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-primary-100">
+            <p className="text-xl md:text-2xl mb-8 text-beige-50">
               Cotizaciones instantáneas, profesionales verificados y pago seguro
             </p>
             
@@ -43,7 +43,7 @@ export default async function HomePage() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/cotizar">
-                <Button size="lg" variant="secondary" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white border-0">
                   Cotizar Servicio
                 </Button>
               </Link>
@@ -58,12 +58,12 @@ export default async function HomePage() {
       </section>
 
       {/* Categorías de Servicios */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-beige-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4">
+          <h2 className="text-3xl font-bold text-center mb-4 text-primary-600">
             Servicios Profesionales Disponibles
           </h2>
-          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+          <p className="text-center text-primary-600 mb-12 max-w-2xl mx-auto">
             Encuentra el profesional que necesitas, organizado por categoría
           </p>
           
@@ -78,30 +78,30 @@ export default async function HomePage() {
               return (
                 <div
                   key={categoryName}
-                  className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow border-t-4 border-primary-500"
+                  className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow border-t-4 border-orange-500"
                 >
                   <div className="text-4xl mb-3">{categoryInfo?.icon || '📋'}</div>
-                  <h3 className="text-lg font-bold mb-2 text-gray-800">
+                  <h3 className="text-lg font-bold mb-2 text-primary-600">
                     {categoryName}
                   </h3>
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-sm text-primary-600 mb-4">
                     {categoryInfo?.description || ''}
                   </p>
                   <ul className="space-y-2 mb-4">
                     {services.slice(0, 3).map((service) => (
-                      <li key={service.id} className="text-sm text-gray-700 flex items-start">
-                        <span className="text-primary-600 mr-2">•</span>
+                      <li key={service.id} className="text-sm text-primary-600 flex items-start">
+                        <span className="text-orange-500 mr-2">•</span>
                         <span>{service.name}</span>
                       </li>
                     ))}
                     {services.length > 3 && (
-                      <li className="text-sm text-gray-500 italic">
+                      <li className="text-sm text-primary-600 italic">
                         y más...
                       </li>
                     )}
                   </ul>
                   <Link href="/servicios" className="block">
-                    <Button variant="outline" className="w-full text-sm">
+                    <Button variant="outline" className="w-full text-sm border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">
                       Ver servicios
                     </Button>
                   </Link>
@@ -112,7 +112,7 @@ export default async function HomePage() {
 
           <div className="text-center">
             <Link href="/servicios">
-              <Button size="lg">Ver Catálogo Completo de Servicios</Button>
+              <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white">Ver Catálogo Completo de Servicios</Button>
             </Link>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default async function HomePage() {
       {/* Cities Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
+          <h2 className="text-3xl font-bold text-center mb-12 text-primary-600">
             Ciudades Disponibles
           </h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -129,10 +129,10 @@ export default async function HomePage() {
               <Link
                 key={city.id}
                 href={`/${city.slug}`}
-                className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow text-center"
+                className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow text-center border-t-4 border-orange-500"
               >
-                <h3 className="text-xl font-semibold">{city.name}</h3>
-                <p className="text-gray-600 mt-2">
+                <h3 className="text-xl font-semibold text-primary-600">{city.name}</h3>
+                <p className="text-primary-600 mt-2">
                   {(city.zones as string[]).length} zonas disponibles
                 </p>
               </Link>
@@ -142,42 +142,42 @@ export default async function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-beige-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
+          <h2 className="text-3xl font-bold text-center mb-12 text-primary-600">
             ¿Por qué elegirnos?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+              <div className="w-16 h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
                 ✓
               </div>
-              <h3 className="text-xl font-semibold mb-2">
+              <h3 className="text-xl font-semibold mb-2 text-primary-600">
                 Profesionales Verificados
               </h3>
-              <p className="text-gray-600">
+              <p className="text-primary-600">
                 Todos nuestros profesionales pasan por un proceso de verificación riguroso
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+              <div className="w-16 h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
                 $
               </div>
-              <h3 className="text-xl font-semibold mb-2">
+              <h3 className="text-xl font-semibold mb-2 text-primary-600">
                 Precios Transparentes
               </h3>
-              <p className="text-gray-600">
+              <p className="text-primary-600">
                 Cotizaciones instantáneas sin sorpresas ni cobros ocultos
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+              <div className="w-16 h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
                 🔒
               </div>
-              <h3 className="text-xl font-semibold mb-2">
+              <h3 className="text-xl font-semibold mb-2 text-primary-600">
                 Pago Seguro
               </h3>
-              <p className="text-gray-600">
+              <p className="text-primary-600">
                 Sistema de escrow que protege tu dinero hasta que el trabajo esté completo
               </p>
             </div>
@@ -191,11 +191,11 @@ export default async function HomePage() {
           <h2 className="text-3xl font-bold mb-4">
             ¿Listo para comenzar?
           </h2>
-          <p className="text-xl mb-8 text-primary-100">
+          <p className="text-xl mb-8 text-beige-50">
             Obtén una cotización instantánea en menos de 2 minutos
           </p>
           <Link href="/cotizar">
-            <Button size="lg" variant="secondary">
+            <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white border-0">
               Cotizar Ahora
             </Button>
           </Link>
