@@ -16,6 +16,151 @@ export default async function HomePage() {
     .eq('is_active', true)
     .order('name')
 
+  // Mapeo de ciudades a estados
+  const cityStateMap: Record<string, string> = {
+    'Aguascalientes': 'Aguascalientes',
+    'Mexicali': 'Baja California',
+    'Tijuana': 'Baja California',
+    'Ensenada': 'Baja California',
+    'Tecate': 'Baja California',
+    'Rosarito': 'Baja California',
+    'La Paz': 'Baja California Sur',
+    'Cabo San Lucas': 'Baja California Sur',
+    'San José del Cabo': 'Baja California Sur',
+    'Ciudad Constitución': 'Baja California Sur',
+    'San Francisco de Campeche': 'Campeche',
+    'Ciudad del Carmen': 'Campeche',
+    'Champotón': 'Campeche',
+    'Saltillo': 'Coahuila',
+    'Torreón': 'Coahuila',
+    'Monclova': 'Coahuila',
+    'Piedras Negras': 'Coahuila',
+    'Acuña': 'Coahuila',
+    'Colima': 'Colima',
+    'Manzanillo': 'Colima',
+    'Tecomán': 'Colima',
+    'Tuxtla Gutiérrez': 'Chiapas',
+    'San Cristóbal de las Casas': 'Chiapas',
+    'Tapachula': 'Chiapas',
+    'Comitán': 'Chiapas',
+    'Chihuahua': 'Chihuahua',
+    'Ciudad Juárez': 'Chihuahua',
+    'Delicias': 'Chihuahua',
+    'Cuauhtémoc': 'Chihuahua',
+    'Parral': 'Chihuahua',
+    'Ciudad de México': 'Ciudad de México',
+    'Victoria de Durango': 'Durango',
+    'Gómez Palacio': 'Durango',
+    'Guanajuato': 'Guanajuato',
+    'León': 'Guanajuato',
+    'Irapuato': 'Guanajuato',
+    'Celaya': 'Guanajuato',
+    'Salamanca': 'Guanajuato',
+    'Chilpancingo de los Bravo': 'Guerrero',
+    'Acapulco': 'Guerrero',
+    'Iguala': 'Guerrero',
+    'Zihuatanejo': 'Guerrero',
+    'Pachuca de Soto': 'Hidalgo',
+    'Tulancingo': 'Hidalgo',
+    'Tizayuca': 'Hidalgo',
+    'Tula de Allende': 'Hidalgo',
+    'Guadalajara': 'Jalisco',
+    'Tepatitlán': 'Jalisco',
+    'Puerto Vallarta': 'Jalisco',
+    'Toluca de Lerdo': 'Estado de México',
+    'Ecatepec': 'Estado de México',
+    'Naucalpan': 'Estado de México',
+    'Tlalnepantla': 'Estado de México',
+    'Nezahualcóyotl': 'Estado de México',
+    'Morelia': 'Michoacán',
+    'Uruapan': 'Michoacán',
+    'Zamora': 'Michoacán',
+    'Lázaro Cárdenas': 'Michoacán',
+    'Pátzcuaro': 'Michoacán',
+    'Cuernavaca': 'Morelos',
+    'Cuautla': 'Morelos',
+    'Temixco': 'Morelos',
+    'Tepic': 'Nayarit',
+    'Bahía de Banderas': 'Nayarit',
+    'Santiago Ixcuintla': 'Nayarit',
+    'Monterrey': 'Nuevo León',
+    'Oaxaca de Juárez': 'Oaxaca',
+    'Salina Cruz': 'Oaxaca',
+    'Juchitán': 'Oaxaca',
+    'Tuxtepec': 'Oaxaca',
+    'Puebla de Zaragoza': 'Puebla',
+    'Tehuacán': 'Puebla',
+    'San Martín Texmelucan': 'Puebla',
+    'Atlixco': 'Puebla',
+    'Santiago de Querétaro': 'Querétaro',
+    'San Juan del Río': 'Querétaro',
+    'Chetumal': 'Quintana Roo',
+    'Cancún': 'Quintana Roo',
+    'Playa del Carmen': 'Quintana Roo',
+    'Tulum': 'Quintana Roo',
+    'Cozumel': 'Quintana Roo',
+    'San Luis Potosí': 'San Luis Potosí',
+    'Ciudad Valles': 'San Luis Potosí',
+    'Matehuala': 'San Luis Potosí',
+    'Rioverde': 'San Luis Potosí',
+    'Culiacán Rosales': 'Sinaloa',
+    'Mazatlán': 'Sinaloa',
+    'Los Mochis': 'Sinaloa',
+    'Guasave': 'Sinaloa',
+    'Hermosillo': 'Sonora',
+    'Ciudad Obregón': 'Sonora',
+    'Nogales': 'Sonora',
+    'San Luis Río Colorado': 'Sonora',
+    'Navojoa': 'Sonora',
+    'Villahermosa': 'Tabasco',
+    'Cárdenas': 'Tabasco',
+    'Comalcalco': 'Tabasco',
+    'Macuspana': 'Tabasco',
+    'Ciudad Victoria': 'Tamaulipas',
+    'Reynosa': 'Tamaulipas',
+    'Tampico': 'Tamaulipas',
+    'Matamoros': 'Tamaulipas',
+    'Nuevo Laredo': 'Tamaulipas',
+    'Tlaxcala de Xicohténcatl': 'Tlaxcala',
+    'Apizaco': 'Tlaxcala',
+    'Huamantla': 'Tlaxcala',
+    'Xalapa-Enríquez': 'Veracruz',
+    'Veracruz': 'Veracruz',
+    'Coatzacoalcos': 'Veracruz',
+    'Orizaba': 'Veracruz',
+    'Poza Rica': 'Veracruz',
+    'Mérida': 'Yucatán',
+    'Valladolid': 'Yucatán',
+    'Tizimín': 'Yucatán',
+    'Progreso': 'Yucatán',
+    'Zacatecas': 'Zacatecas',
+    'Fresnillo': 'Zacatecas',
+    'Jerez': 'Zacatecas',
+  }
+
+  // Agrupar ciudades por estado
+  const statesData = cities?.reduce((acc: Record<string, { name: string; cities: any[]; totalZones: number }>, city) => {
+    const stateName = cityStateMap[city.name] || 'Otros'
+    
+    if (!acc[stateName]) {
+      acc[stateName] = {
+        name: stateName,
+        cities: [],
+        totalZones: 0
+      }
+    }
+    
+    acc[stateName].cities.push(city)
+    acc[stateName].totalZones += (city.zones as string[]).length
+    
+    return acc
+  }, {}) || {}
+
+  // Convertir a array y ordenar, tomar solo los primeros 6 estados
+  const states = Object.values(statesData)
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .slice(0, 6)
+
   // Obtener servicios agrupados por categoría
   const servicesByCategory = getServicesByCategory()
   const categoryKeys = Object.keys(servicesByCategory)
@@ -118,31 +263,31 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Cities Section */}
+      {/* States Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-primary-600">
-            Ciudades Disponibles
+            Estados Disponibles
           </h2>
           
-          {/* Mostrar solo las primeras 6 ciudades inicialmente */}
+          {/* Mostrar solo los primeros 6 estados inicialmente */}
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
-            {cities?.slice(0, 6).map((city) => (
+            {states.map((state) => (
               <Link
-                key={city.id}
-                href={`/${city.slug}`}
+                key={state.name}
+                href={`/estados/${state.name.toLowerCase().replace(/\s+/g, '-').replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u')}`}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow text-center border-t-4 border-orange-500"
               >
-                <h3 className="text-xl font-semibold text-primary-600">{city.name}</h3>
+                <h3 className="text-xl font-semibold text-primary-600">{state.name}</h3>
                 <p className="text-primary-600 mt-2">
-                  {(city.zones as string[]).length} zonas disponibles
+                  {state.cities.length} ciudades disponibles
                 </p>
               </Link>
             ))}
           </div>
 
           {/* Botón para mostrar todas las ciudades */}
-          {cities && cities.length > 6 && (
+          {cities && cities.length > 0 && (
             <div className="text-center">
               <Link href="/ciudades">
                 <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold inline-flex items-center gap-2 transition-colors shadow-md hover:shadow-lg">
