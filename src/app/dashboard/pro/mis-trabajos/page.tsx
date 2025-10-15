@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { formatCurrency, formatDateTime } from '@/lib/utils'
 import Link from 'next/link'
 
-export default async function MisTrabajos ProPage() {
+export default async function MisTrabajos() {
   const supabase = await createClient()
 
   const {
