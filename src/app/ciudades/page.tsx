@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import CityCard from '@/components/ui/CityCard'
 
 export default async function CitiesPage() {
   const supabase = await createClient()
@@ -169,32 +170,39 @@ export default async function CitiesPage() {
       </section>
 
       {/* Cities Grid by State */}
-      <section className="py-16">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             {stateNames.map((state) => (
-              <div key={state} className="mb-12">
-                <h2 className="text-2xl font-bold text-primary-600 mb-6 border-b-2 border-orange-500 pb-2">
-                  {state} ({citiesByState[state].length} ciudades)
-                </h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div key={state} className="mb-16">
+                <div className="mb-8">
+                  <div className="flex items-center gap-4 mb-3">
+                    <span className="text-4xl">🏙️</span>
+                    <div>
+                      <h2 className="text-3xl font-bold text-gray-800">
+                        {state}
+                      </h2>
+                      <p className="text-gray-600 mt-1">
+                        {citiesByState[state].length} ciudades disponibles
+                      </p>
+                    </div>
+                  </div>
+                  <div className="h-1 bg-gradient-to-r from-orange-500 to-transparent rounded"></div>
+                </div>
+                <div className="cities-grid">
                   {citiesByState[state].map((city) => (
                     <Link
                       key={city.id}
                       href={`/${city.slug}`}
-                      className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow border-t-4 border-orange-500 hover:border-orange-600 group"
+                      className="city-card-link"
                     >
-                      <h3 className="text-lg font-semibold text-primary-600 group-hover:text-orange-600 transition-colors mb-2">
-                        {city.name}
-                      </h3>
-                      <p className="text-sm text-primary-600">
-                        {(city.zones as string[]).length} zonas disponibles
-                      </p>
-                      <div className="mt-2">
-                        <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
-                          Ver servicios
-                        </span>
-                      </div>
+                      <CityCard 
+                        city={city}
+                        particleCount={6}
+                        enableTilt={true}
+                        clickEffect={true}
+                        enableMagnetism={true}
+                      />
                     </Link>
                   ))}
                 </div>

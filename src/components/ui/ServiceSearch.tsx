@@ -64,7 +64,7 @@ export function ServiceSearch({ services }: ServiceSearchProps) {
 
       {/* Results dropdown */}
       {showResults && searchTerm && filteredServices.length > 0 && (
-        <div className="absolute z-50 w-full mt-2 bg-white rounded-lg shadow-xl border border-gray-200 max-h-96 overflow-y-auto">
+        <div className="absolute z-[9999] w-full mt-2 bg-white rounded-lg shadow-xl border border-gray-200 max-h-96 overflow-y-auto">
           {filteredServices.map((service) => (
             <button
               key={service.id}
@@ -89,7 +89,7 @@ export function ServiceSearch({ services }: ServiceSearchProps) {
 
       {/* No results message */}
       {showResults && searchTerm && filteredServices.length === 0 && (
-        <div className="absolute z-50 w-full mt-2 bg-white rounded-lg shadow-xl border border-gray-200 px-6 py-4">
+        <div className="absolute z-[9999] w-full mt-2 bg-white rounded-lg shadow-xl border border-gray-200 px-6 py-4">
           <p className="text-gray-600 text-center">
             No se encontraron servicios. Intenta con otro término de búsqueda.
           </p>
@@ -99,7 +99,7 @@ export function ServiceSearch({ services }: ServiceSearchProps) {
       {/* Click outside to close */}
       {showResults && (
         <div
-          className="fixed inset-0 z-40"
+          className="fixed inset-0 z-[9998]"
           onClick={() => setShowResults(false)}
         />
       )}

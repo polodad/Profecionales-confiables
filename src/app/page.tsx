@@ -3,9 +3,10 @@ import { createClient } from '@/lib/supabase/server'
 import { Button } from '@/components/ui/Button'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { ServiceSearch } from '@/components/ui/ServiceSearch'
-import { ToolsBackground } from '@/components/ui/ToolsBackground'
-import { SERVICES_CATALOG, SERVICE_CATEGORIES, getServicesByCategory } from '@/lib/services-catalog'
+import { HeroSection } from '@/components/layout/HeroSection'
+import MagicBento from '@/components/ui/MagicBento'
+import Counter from '@/components/ui/Counter'
+import { SERVICE_CATEGORIES, getServicesByCategory } from '@/lib/services-catalog'
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -170,40 +171,10 @@ export default async function HomePage() {
       <Header />
 
       {/* Hero Section con Buscador */}
-      <section className="relative text-white py-20 overflow-hidden bg-gradient-to-br from-primary-600 to-primary-800">
-        <ToolsBackground />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Profesionales Confiables para tu Proyecto
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-beige-50">
-              Cotizaciones instantáneas, profesionales verificados y pago seguro
-            </p>
-            
-            {/* Buscador de servicios */}
-            <div className="mb-8">
-              <ServiceSearch services={SERVICES_CATALOG} />
-            </div>
+      <HeroSection />
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/cotizar">
-                <Button size="lg" className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white border-0">
-                  Cotizar Servicio
-                </Button>
-              </Link>
-              <Link href="/profesionales">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-primary-600">
-                  Registrarse como Profesional
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Categorías de Servicios */}
-      <section className="py-16 bg-beige-50">
+      {/* Categorías de Servicios con MagicBento */}
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-4 text-primary-600">
             Servicios Profesionales Disponibles
@@ -212,50 +183,20 @@ export default async function HomePage() {
             Encuentra el profesional que necesitas, organizado por categoría
           </p>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {categoryKeys.slice(0, 8).map((categoryName) => {
-              const services = servicesByCategory[categoryName]
-              const categoryKey = Object.keys(SERVICE_CATEGORIES).find(
-                key => SERVICE_CATEGORIES[key as keyof typeof SERVICE_CATEGORIES].name === categoryName
-              ) as keyof typeof SERVICE_CATEGORIES | undefined
-              const categoryInfo = categoryKey ? SERVICE_CATEGORIES[categoryKey] : null
-              
-              return (
-                <div
-                  key={categoryName}
-                  className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow border-t-4 border-orange-500"
-                >
-                  <div className="text-4xl mb-3">{categoryInfo?.icon || '📋'}</div>
-                  <h3 className="text-lg font-bold mb-2 text-primary-600">
-                    {categoryName}
-                  </h3>
-                  <p className="text-sm text-primary-600 mb-4">
-                    {categoryInfo?.description || ''}
-                  </p>
-                  <ul className="space-y-2 mb-4">
-                    {services.slice(0, 3).map((service) => (
-                      <li key={service.id} className="text-sm text-primary-600 flex items-start">
-                        <span className="text-orange-500 mr-2">•</span>
-                        <span>{service.name}</span>
-                      </li>
-                    ))}
-                    {services.length > 3 && (
-                      <li className="text-sm text-primary-600 italic">
-                        y más...
-                      </li>
-                    )}
-                  </ul>
-                  <Link href="/servicios" className="block">
-                    <Button variant="outline" className="w-full text-sm border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">
-                      Ver servicios
-                    </Button>
-                  </Link>
-                </div>
-              )
-            })}
-          </div>
+          <MagicBento 
+            textAutoHide={true}
+            enableStars={true}
+            enableSpotlight={true}
+            enableBorderGlow={true}
+            enableTilt={true}
+            enableMagnetism={true}
+            clickEffect={true}
+            spotlightRadius={300}
+            particleCount={12}
+            glowColor="255, 140, 0"
+          />
 
-          <div className="text-center">
+          <div className="text-center mt-12">
             <Link href="/servicios">
               <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white">Ver Catálogo Completo de Servicios</Button>
             </Link>
@@ -307,9 +248,22 @@ export default async function HomePage() {
 
           {/* Mostrar contador de ciudades */}
           <div className="text-center mt-8">
-            <p className="text-primary-600 text-lg">
-              <strong>{cities?.length || 0} ciudades</strong> disponibles en toda la República Mexicana
-            </p>
+            <div className="flex items-center justify-center gap-4 text-lg">
+              <Counter
+                value={cities?.length || 0}
+                places={[100, 10, 1]}
+                fontSize={48}
+                padding={5}
+                gap={4}
+                textColor="#1e3a5f"
+                fontWeight={900}
+                gradientFrom="rgba(249, 250, 251, 0)"
+                gradientTo="rgba(249, 250, 251, 0)"
+              />
+              <span className="text-primary-600 text-lg font-semibold">
+                ciudades disponibles en toda la República Mexicana
+              </span>
+            </div>
           </div>
         </div>
       </section>
