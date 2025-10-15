@@ -89,7 +89,9 @@ export function verifyWebhookSignature(
   data: string,
   secret: string
 ): boolean {
-  const crypto = require('crypto')
+  // Use dynamic import for crypto in Node.js environment
+  const crypto = globalThis.require?.('crypto') as any
+  if (!crypto) return false
   const hash = crypto.createHmac('sha256', secret).update(data).digest('hex')
   return hash === signature
 }
