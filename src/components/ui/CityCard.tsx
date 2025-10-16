@@ -109,7 +109,7 @@ const CityCard: React.FC<CityCardProps> = ({
       const timeoutId = setTimeout(() => {
         if (!isHoveredRef.current || !cardRef.current) return;
 
-        const clone = particle.cloneNode(true);
+        const clone = particle.cloneNode(true) as HTMLDivElement;
         cardRef.current.appendChild(clone);
         particlesRef.current.push(clone);
 
@@ -181,7 +181,7 @@ const CityCard: React.FC<CityCardProps> = ({
       }
     };
 
-    const handleMouseMove = e => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (!enableTilt && !enableMagnetism) return;
 
       const rect = element.getBoundingClientRect();
@@ -216,7 +216,7 @@ const CityCard: React.FC<CityCardProps> = ({
       }
     };
 
-    const handleClick = e => {
+    const handleClick = (e: MouseEvent) => {
       if (!clickEffect) return;
 
       const rect = element.getBoundingClientRect();
