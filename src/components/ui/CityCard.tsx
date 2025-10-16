@@ -8,7 +8,7 @@ const DEFAULT_PARTICLE_COUNT = 6;
 const DEFAULT_GLOW_COLOR = '255, 140, 0'; // Naranja para coincidir con la paleta
 const MOBILE_BREAKPOINT = 768;
 
-const createParticleElement = (x, y, color = DEFAULT_GLOW_COLOR) => {
+const createParticleElement = (x: number, y: number, color: string = DEFAULT_GLOW_COLOR) => {
   const el = document.createElement('div');
   el.className = 'city-particle';
   el.style.cssText = `
