@@ -8,6 +8,23 @@ const DEFAULT_PARTICLE_COUNT = 6;
 const DEFAULT_GLOW_COLOR = '255, 140, 0'; // Naranja para coincidir con la paleta
 const MOBILE_BREAKPOINT = 768;
 
+interface CityCardProps {
+  city: {
+    id: string;
+    name: string;
+    state: string;
+    slug: string;
+    [key: string]: any;
+  };
+  className?: string;
+  disableAnimations?: boolean;
+  particleCount?: number;
+  glowColor?: string;
+  enableTilt?: boolean;
+  clickEffect?: boolean;
+  enableMagnetism?: boolean;
+}
+
 const createParticleElement = (x: number, y: number, color: string = DEFAULT_GLOW_COLOR) => {
   const el = document.createElement('div');
   el.className = 'city-particle';
@@ -26,7 +43,7 @@ const createParticleElement = (x: number, y: number, color: string = DEFAULT_GLO
   return el;
 };
 
-const CityCard = ({
+const CityCard: React.FC<CityCardProps> = ({
   city,
   className = '',
   disableAnimations = false,
